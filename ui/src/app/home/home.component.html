@@ -1,0 +1,47 @@
+<div class="content-container">
+    <div class="content-area">
+        <button class="btn btn-primary" (click)="openModal(true)">Add New</button>
+        <clr-datagrid>
+            <clr-dg-column [clrDgField]="'id'" [clrDgSortOrder]="descSort" [style.width.px]="100">Record ID</clr-dg-column>
+            <clr-dg-column [clrDgField]="'ip'" [clrDgSortOrder]="descSort">IP</clr-dg-column>
+            <clr-dg-column [clrDgField]="'hostname'" [clrDgSortOrder]="descSort">Hostname</clr-dg-column>
+
+            <clr-dg-row *clrDgItems="let networkInfo of networkInfoList" [clrDgItem]="networkInfo">
+                <clr-dg-action-overflow>
+                    <button class="action-item" (click)="onEdit(networkInfo)">Edit</button>
+                    <button class="action-item" (click)="onDelete(networkInfo)">Delete</button>
+                </clr-dg-action-overflow>
+                <clr-dg-cell>{{networkInfo.id}}</clr-dg-cell>
+                <clr-dg-cell>{{networkInfo.ip}}</clr-dg-cell>
+                <clr-dg-cell>{{networkInfo.hostname}}</clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-footer>
+                <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}}
+                </clr-dg-pagination>
+            </clr-dg-footer>
+        </clr-datagrid>
+        <clr-modal [(clrModalOpen)]="isModalOpen">
+                <h3 class="modal-title">{{modalTitle}}</h3>
+                <div class="modal-body">
+                    <form>
+                        <section class="form-block">
+                            <div class="form-group">
+                                <label for="formField1" class="required">IP</label>
+                                <input type="text" id="formField2" placeholder="ex. 192.168.1.1" size="15" name="ip" [(ngModel)]="networkInfoObj.ip">
+                            </div>
+                            <div class="form-group">
+                                <label for="formField3" class="required">Hostname</label>
+                                <input type="url" id="formField4" placeholder="ex. http://google.com" size="50" name="hostname" [(ngModel)]="networkInfoObj.hostname">
+                            </div>
+                        </section>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="isModalOpen = false">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+                </div>
+            </clr-modal>
+    </div>
+</div>
