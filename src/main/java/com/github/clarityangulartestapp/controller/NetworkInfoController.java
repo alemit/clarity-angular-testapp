@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.clarityangulartestapp.error.NetworkInfoValidationException;
 import com.github.clarityangulartestapp.model.NetworkInfo;
 import com.github.clarityangulartestapp.service.NetworkInfoService;
 
@@ -47,7 +48,7 @@ public class NetworkInfoController {
     }
     
     @RequestMapping(path = "/network-info/{id}", method = RequestMethod.DELETE)
-    public void deleteNetworkInfoById(@PathVariable("id") Long id) {
+    public void deleteNetworkInfoById(@PathVariable("id") Long id) throws NetworkInfoValidationException {
         networkInfoService.deleteNetworkInfoById(id);
     }
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOGS_HOME" value="D:/Projects/clarity-angular-testapp/logs" />
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="fileAudit"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS_HOME}/clarity-angular-testapp.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOGS_HOME}/clarity-angular-testapp.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="com.github.clarityangulartestapp" level="DEBUG" additivity="false">
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="fileAudit" />
+	</logger>
+
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.springframework.security" level="WARN" />
+
+	<root level="DEBUG">
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="fileAudit" />
+	</root>
+</configuration>

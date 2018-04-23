@@ -22,7 +22,7 @@ public class NetworkInfo {
 
     @NotNull(message = "The field should not be empty")
     @Size(min = 7, max = 15, message = "Field 'up' must be between 7 and 15 symbols")
-    @Pattern(message = "Value is not correct",
+    @Pattern(message = "Invalid field format",
             regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
     @Column(name = "ip")
     private String ip;
