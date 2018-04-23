@@ -2,6 +2,8 @@ package com.github.clarityangulartestapp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +32,13 @@ public class NetworkInfoController {
     }
 
     @RequestMapping(path = "/network-info", method = RequestMethod.POST)
-    public ResponseEntity<?> createNetworkInfo(@RequestBody NetworkInfo networkInfo) {
+    public ResponseEntity<?> createNetworkInfo(@Valid @RequestBody NetworkInfo networkInfo) {
         NetworkInfo ni = networkInfoService.createNetworkInfo(networkInfo);
         return new ResponseEntity<NetworkInfo>(ni, HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/network-info/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateNetworkInfoById(@PathVariable("id") Long id, @RequestBody NetworkInfo networkInfo) {
+    public ResponseEntity<?> updateNetworkInfoById(@PathVariable("id") Long id, @Valid @RequestBody NetworkInfo networkInfo) {
         NetworkInfo ni = networkInfoService.updateNetworkInfoById(id, networkInfo);
         if (ni == null) {
             return ResponseEntity.notFound().build();
