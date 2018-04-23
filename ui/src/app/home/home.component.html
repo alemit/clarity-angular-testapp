@@ -23,25 +23,32 @@
             </clr-dg-footer>
         </clr-datagrid>
         <clr-modal [(clrModalOpen)]="isModalOpen">
-                <h3 class="modal-title">{{modalTitle}}</h3>
-                <div class="modal-body">
-                    <form>
-                        <section class="form-block">
-                            <div class="form-group">
-                                <label for="formField1" class="required">IP</label>
-                                <input type="text" id="formField2" placeholder="ex. 192.168.1.1" size="15" name="ip" [(ngModel)]="networkInfoObj.ip">
-                            </div>
-                            <div class="form-group">
-                                <label for="formField3" class="required">Hostname</label>
-                                <input type="url" id="formField4" placeholder="ex. http://google.com" size="50" name="hostname" [(ngModel)]="networkInfoObj.hostname">
-                            </div>
-                        </section>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline" (click)="isModalOpen = false">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="save()">Save</button>
-                </div>
-            </clr-modal>
+            <h3 class="modal-title">{{modalTitle}}</h3>
+            <div class="modal-body">
+                <form>
+                    <section class="form-block">
+                        <div class="form-group">
+                            <label for="formField1" class="required">IP</label>
+                            <input type="text" id="formField2" placeholder="ex. 192.168.1.1" size="15" name="ip" [(ngModel)]="networkInfoObj.ip">
+                        </div>
+                        <div class="form-group">
+                            <label for="formField3" class="required">Hostname</label>
+                            <input type="url" id="formField4" placeholder="ex. http://google.com" size="50" name="hostname" [(ngModel)]="networkInfoObj.hostname">
+                        </div>
+                    </section>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" (click)="isModalOpen = false">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+            </div>
+        </clr-modal>
+        <clr-alert [clrAlertType]="'alert-success'" [clrAlertClosed]="closeAlert">
+            <div clr-alert-item class="alert-item">
+                <span class="alert-text">
+                    Saved Successfully!
+                </span>
+            </div>
+        </clr-alert>
     </div>
 </div>

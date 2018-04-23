@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
     networkInfoObj: NetworkInfo;
     isModalOpen: Boolean = false;
     isModalCreate: Boolean = true;
+    closeAlert: Boolean = true;
     modalTitle: string;
     descSort = ClrDatagridSortOrder.DESC;
 
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
             this.networkInfoService.createNewNetworkInfo(this.networkInfoObj).subscribe(
                 (response) => {
                     this.loadAll();
+                    this.showAlert();
                 }, (error) => {
                     console.log(error);
                 });
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
             this.networkInfoService.editNetworkInfo(this.networkInfoObj).subscribe(
                 (response) => {
                     this.loadAll();
+                    this.showAlert();
                 }, (error) => {
                     console.log(error);
                 });
@@ -75,5 +78,12 @@ export class HomeComponent implements OnInit {
             }, (error) => {
                 console.log(error);
             });
+    }
+
+    private showAlert() {
+        this.closeAlert = false;
+        setTimeout(() => {
+            this.closeAlert = true;
+        }, 3000);
     }
 }
