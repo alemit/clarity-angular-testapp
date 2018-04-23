@@ -21,4 +21,14 @@ export class NetworkInfoService {
     const url = this.server_url + '/network-info';
     return this.http.post<NetworkInfo>(url, networkInfo);
   }
+
+  public editNetworkInfo(networkInfo: NetworkInfo): Observable<Response> {
+    const url = this.server_url + '/network-info/' + String(networkInfo.id);
+    return this.http.put<Response>(url, networkInfo);
+  }
+
+  public deleteNetworkInfoById(id: number): Observable<Response> {
+    const url = this.server_url + '/network-info/' + String(id);
+    return this.http.delete<Response>(url);
+  }
 }

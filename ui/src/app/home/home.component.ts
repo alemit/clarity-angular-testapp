@@ -30,7 +30,12 @@ export class HomeComponent implements OnInit {
                     console.log(error);
                 });
         } else {
-            // edit
+            this.networkInfoService.editNetworkInfo(this.networkInfoObj).subscribe(
+                (response) => {
+                    this.loadAll();
+                }, (error) => {
+                    console.log(error);
+                });
         }
         this.isModalOpen = false;
     }
@@ -38,11 +43,18 @@ export class HomeComponent implements OnInit {
     onEdit(networkInfo: NetworkInfo) {
         this.networkInfoObj = networkInfo;
         this.openModal(false);
-        console.log('Edited object:' + networkInfo);
+        console.log('Edited object with id:' + networkInfo.id);
     }
 
     onDelete(networkInfo: NetworkInfo) {
-        console.log('Deleted object:' + networkInfo);
+        this.networkInfoService.deleteNetworkInfoById(networkInfo.id).subscribe(
+            (response) => {
+                console.log('Deleted object with id:' + networkInfo.id);
+                this.loadAll();
+            }, (error) => {
+                console.log(error);
+            }
+        );
     }
 
     openModal(isModalCreate: Boolean) {
