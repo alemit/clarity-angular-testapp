@@ -20,14 +20,14 @@ public class NetworkInfo {
     @Column(name = "id")
     private long id;
 
-    @NotNull(message = "The field should not be empty")
-    @Size(min = 7, max = 15, message = "Field 'up' must be between 7 and 15 symbols")
-    @Pattern(message = "Invalid field format",
+    @NotNull(message = "The field 'ip' should not be empty")
+    @Size(min = 7, max = 15, message = "Field 'ip' must be between 7 and 15 symbols")
+    @Pattern(message = "Invalid 'ip' field format",
             regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
     @Column(name = "ip")
     private String ip;
 
-    @NotNull(message = "The field should not be empty")
+    @NotNull(message = "The field 'hostname' should not be empty")
     @Size(min = 1, max = 255, message = "Field 'hostname' must be between 1 and 255 symbols")
     @Column(name = "hostname")
     private String hostname;

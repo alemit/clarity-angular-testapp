@@ -94,7 +94,7 @@ public class ErrorInfo implements Serializable {
         this.errorClass = throwable.getClass().getName();
     }
 
-    public boolean isFieldFalidation() {
+    public boolean isFieldValidation() {
         return fieldValidation;
     }
 
