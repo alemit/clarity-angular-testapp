@@ -11,9 +11,14 @@ export class HomeComponent implements OnInit {
     networkInfoObj: NetworkInfo;
     isModalOpen: Boolean = false;
     isModalCreate: Boolean = true;
-    closeAlert: Boolean = true;
+    closeSuccessAlert: Boolean = true;
+    closeErrorAlert: Boolean = true;
     modalTitle: string;
     descSort = ClrDatagridSortOrder.DESC;
+    validIpInput: Boolean = true;
+    validHostnameInput: Boolean = true;
+    ipValidationMsg: string = '';
+    hostnameValidationMsg: string = '';
 
     constructor(private networkInfoService: NetworkInfoService) { }
 
@@ -27,20 +32,33 @@ export class HomeComponent implements OnInit {
             this.networkInfoService.createNewNetworkInfo(this.networkInfoObj).subscribe(
                 (response) => {
                     this.loadAll();
-                    this.showAlert();
+                    this.showSuccessAlert();
+                    this.isModalOpen = false;
                 }, (error) => {
-                    console.log(error);
+                    if (error.status == 400 && error.error.fieldValidation) {
+                        this.showIncorrectFields(error);
+                    } else {
+                        this.showErrorAlert();
+                        console.log(error);
+                        this.isModalOpen = false;
+                    }
                 });
         } else {
             this.networkInfoService.editNetworkInfo(this.networkInfoObj).subscribe(
                 (response) => {
                     this.loadAll();
-                    this.showAlert();
+                    this.showSuccessAlert();
+                    this.isModalOpen = false;
                 }, (error) => {
-                    console.log(error);
+                    if (error.status == 400 && error.error.fieldValidation) {
+                        this.showIncorrectFields(error);
+                    } else {
+                        this.showErrorAlert();
+                        console.log(error);
+                        this.isModalOpen = false;
+                    }
                 });
         }
-        this.isModalOpen = false;
     }
 
     onEdit(networkInfo: NetworkInfo) {
@@ -53,9 +71,11 @@ export class HomeComponent implements OnInit {
         this.networkInfoService.deleteNetworkInfoById(networkInfo.id).subscribe(
             (response) => {
                 console.log('Deleted object with id:' + networkInfo.id);
+                this.showSuccessAlert();
                 this.loadAll();
             }, (error) => {
                 console.log(error);
+                this.showErrorAlert();
             }
         );
     }
@@ -80,10 +100,45 @@ export class HomeComponent implements OnInit {
             });
     }
 
-    private showAlert() {
-        this.closeAlert = false;
+    private showSuccessAlert() {
+        this.closeSuccessAlert = false;
         setTimeout(() => {
-            this.closeAlert = true;
+            this.closeSuccessAlert = true;
         }, 3000);
+    }
+
+    private showErrorAlert() {
+        this.closeErrorAlert = false;
+        setTimeout(() => {
+            this.closeErrorAlert = true;
+        }, 3000);
+    }
+
+    private clearValidation() {
+        this.ipValidationMsg = '';
+        this.validIpInput = true;
+        this.hostnameValidationMsg = '';
+        this.validHostnameInput = true;
+    }
+
+    private showIncorrectFields(error: any) {
+        this.clearValidation();
+        let fieldsErrors = error.error.errors;
+        if (fieldsErrors) {
+            console.log(fieldsErrors);
+            fieldsErrors.forEach(err => {
+                let field = err.field;
+                let errorMessage = err.errorMsg;
+                console.log(field + ': ' + errorMessage);
+                if (field == 'ip') {
+                    this.ipValidationMsg = errorMessage;
+                    this.validIpInput = false;
+                }
+                if (field == 'hostname') {
+                    this.hostnameValidationMsg = errorMessage;
+                    this.validHostnameInput = false;
+                }
+            });
+        }
     }
 }

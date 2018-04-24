@@ -28,12 +28,24 @@
                 <form>
                     <section class="form-block">
                         <div class="form-group">
-                            <label for="formField1" class="required">IP</label>
-                            <input type="text" id="formField2" placeholder="ex. 192.168.1.1" size="15" name="ip" [(ngModel)]="networkInfoObj.ip">
+                            <label class="required">IP</label>
+                            <label for="ip" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation invalid tooltip-md tooltip-bottom-left"
+                                [class.invalid]="!validIpInput">
+                                <input type="text" id="ip" placeholder="ex. 192.168.1.1" size="15" name="ip" [(ngModel)]="networkInfoObj.ip">
+                                <span class="tooltip-content" [hidden]="validIpInput">
+                                    {{ipValidationMsg}}
+                                </span>
+                            </label>
                         </div>
                         <div class="form-group">
-                            <label for="formField3" class="required">Hostname</label>
-                            <input type="url" id="formField4" placeholder="ex. http://google.com" size="50" name="hostname" [(ngModel)]="networkInfoObj.hostname">
+                            <label class="required">Hostname</label>
+                            <label for="hostname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation invalid tooltip-md tooltip-top-left"
+                                [class.invalid]="!validHostnameInput">
+                                <input type="url" id="hostname" placeholder="ex. http://google.com" size="30" name="hostname" [(ngModel)]="networkInfoObj.hostname">
+                                <span class="tooltip-content" [hidden]="validHostnameInput">
+                                    {{hostnameValidationMsg}}
+                                </span>
+                            </label>
                         </div>
                     </section>
                 </form>
@@ -43,10 +55,17 @@
                 <button type="button" class="btn btn-primary" (click)="save()">Save</button>
             </div>
         </clr-modal>
-        <clr-alert [clrAlertType]="'alert-success'" [clrAlertClosed]="closeAlert">
+        <clr-alert [clrAlertType]="'alert-success'" [clrAlertClosed]="closeSuccessAlert">
             <div clr-alert-item class="alert-item">
                 <span class="alert-text">
                     Saved Successfully!
+                </span>
+            </div>
+        </clr-alert>
+        <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosed]="closeErrorAlert">
+            <div clr-alert-item class="alert-item">
+                <span class="alert-text">
+                    Some error occured!
                 </span>
             </div>
         </clr-alert>
