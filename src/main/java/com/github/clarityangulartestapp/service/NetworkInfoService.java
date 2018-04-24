@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.clarityangulartestapp.error.NetworkInfoValidationException;
+import com.github.clarityangulartestapp.error.ValidationErrorField;
 import com.github.clarityangulartestapp.model.NetworkInfo;
 import com.github.clarityangulartestapp.repository.NetworkInfoRepository;
 
@@ -45,7 +47,14 @@ public class NetworkInfoService {
         return networkInfoRepository.save(ni);
     }
 
-    public void deleteNetworkInfoById(Long id) {
+    public void deleteNetworkInfoById(Long id) throws NetworkInfoValidationException {
+        NetworkInfo ni = networkInfoRepository.findOne(id);
+
+        if (ni == null) {
+            throw new NetworkInfoValidationException("Invalid networkInfo id",
+                    new ValidationErrorField("networkInfo", "id", "Invalid networkInfo id"));
+        }
+
         networkInfoRepository.delete(id);
     }
 }
