@@ -2,6 +2,8 @@ package com.github.clarityangulartestapp.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,30 +14,39 @@ import com.github.clarityangulartestapp.repository.NetworkInfoRepository;
 
 @Service
 public class NetworkInfoService {
+
+    private static final Logger logger = LoggerFactory.getLogger(NetworkInfoService.class);
+
     @Autowired
     NetworkInfoRepository networkInfoRepository;
 
     public List<NetworkInfo> findAllNetworkInfo() {
+        logger.debug("[findAllNetworkInfo] called");
         return networkInfoRepository.findAll();
     }
 
     public NetworkInfo findNetworkInfoById(Long id) {
+        logger.debug("[findNetworkInfoById] called with id=" + id);
         return networkInfoRepository.findOne(id);
     }
 
-    public List<NetworkInfo> findByIp(String ip) {
-        return networkInfoRepository.findByIp(ip);
+    public List<NetworkInfo> findNetworkInfoByIp(String ip) {
+        logger.debug("[findNetworkInfoByIp] called with ip=" + ip);
+        return networkInfoRepository.findNetworkInfoByIp(ip);
     }
 
-    public List<NetworkInfo> findByHostname(String hostname) {
-        return networkInfoRepository.findByHostname(hostname);
+    public List<NetworkInfo> findNetworkInfoByHostname(String hostname) {
+        logger.debug("[findNetworkInfoByHostname] called with hostname=" + hostname);
+        return networkInfoRepository.findNetworkInfoByHostname(hostname);
     }
 
     public NetworkInfo createNetworkInfo(NetworkInfo networkInfo) {
+        logger.debug("[createNetworkInfo] called for " + networkInfo);
         return networkInfoRepository.save(networkInfo);
     }
 
     public NetworkInfo updateNetworkInfoById(Long id, NetworkInfo networkInfo) {
+        logger.debug("[updateNetworkInfoById] called with id=" + id + " for " + networkInfo);
         NetworkInfo ni = networkInfoRepository.findOne(id);
 
         if (ni == null) {
@@ -48,6 +59,7 @@ public class NetworkInfoService {
     }
 
     public void deleteNetworkInfoById(Long id) throws NetworkInfoValidationException {
+        logger.debug("[deleteNetworkInfoById] called for id=" + id);
         NetworkInfo ni = networkInfoRepository.findOne(id);
 
         if (ni == null) {

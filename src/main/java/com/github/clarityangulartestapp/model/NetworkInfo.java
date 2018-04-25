@@ -55,4 +55,43 @@ public class NetworkInfo {
     public void setHostname(String hostname) {
         this.hostname = hostname;
     }
+
+    @Override
+    public String toString() {
+        return "NetworkInfo [id=" + id + ", ip=" + ip + ", hostname=" + hostname + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((hostname == null) ? 0 : hostname.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((ip == null) ? 0 : ip.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        NetworkInfo other = (NetworkInfo) obj;
+        if (hostname == null) {
+            if (other.hostname != null)
+                return false;
+        } else if (!hostname.equals(other.hostname))
+            return false;
+        if (id != other.id)
+            return false;
+        if (ip == null) {
+            if (other.ip != null)
+                return false;
+        } else if (!ip.equals(other.ip))
+            return false;
+        return true;
+    }
 }
