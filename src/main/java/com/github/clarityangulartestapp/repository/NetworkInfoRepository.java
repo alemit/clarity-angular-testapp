@@ -9,7 +9,7 @@ import com.github.clarityangulartestapp.model.NetworkInfo;
 public interface NetworkInfoRepository extends CrudRepository<NetworkInfo, Long> {
     List<NetworkInfo> findAll();
 
-    List<NetworkInfo> findByIp(String ip);
+    List<NetworkInfo> findNetworkInfoByIp(String ip);
 
-    List<NetworkInfo> findByHostname(String hostname);
+    List<NetworkInfo> findNetworkInfoByHostname(String hostname);
 }
