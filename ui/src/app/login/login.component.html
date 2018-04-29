@@ -1,0 +1,24 @@
+<form>
+  <section class="form-block">
+    <div class="form-group">
+      <label for="username_input">Username</label>
+      <input type="text" id="username_input" placeholder="Enter username" name="username" size="45" [(ngModel)]="user.username">
+    </div>
+    <div class="form-group">
+      <label for="password_input">Password</label>
+      <input type="password" id="password_input" placeholder="Enter password" name="password" size="45" [(ngModel)]="user.password">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+    <p>
+      If you don't have an account please
+      <a href="#" [routerLink]="['/register']"> register</a>.
+    </p>
+  </section>
+</form>
+<clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosed]="closeErrorAlert">
+  <div clr-alert-item class="alert-item">
+    <span class="alert-text">
+      Please enter valid username and password!
+    </span>
+  </div>
+</clr-alert>

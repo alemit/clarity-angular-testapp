@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "network_info")
+@Table(name = "network_info", schema = "netinfo")
 public class NetworkInfo {
     @Id
     @SequenceGenerator(name = "network_info_generator", sequenceName = "network_info_seq", allocationSize = 1)
@@ -31,6 +31,9 @@ public class NetworkInfo {
     @Size(min = 1, max = 255, message = "Field 'hostname' must be between 1 and 255 symbols")
     @Column(name = "hostname")
     private String hostname;
+
+    @Column(name = "create_user")
+    private String createUser;
 
     public long getId() {
         return id;
@@ -56,42 +59,16 @@ public class NetworkInfo {
         this.hostname = hostname;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
     @Override
     public String toString() {
-        return "NetworkInfo [id=" + id + ", ip=" + ip + ", hostname=" + hostname + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((hostname == null) ? 0 : hostname.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((ip == null) ? 0 : ip.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        NetworkInfo other = (NetworkInfo) obj;
-        if (hostname == null) {
-            if (other.hostname != null)
-                return false;
-        } else if (!hostname.equals(other.hostname))
-            return false;
-        if (id != other.id)
-            return false;
-        if (ip == null) {
-            if (other.ip != null)
-                return false;
-        } else if (!ip.equals(other.ip))
-            return false;
-        return true;
+        return "NetworkInfo [id=" + id + ", ip=" + ip + ", hostname=" + hostname + ", createUser=" + createUser + "]";
     }
 }

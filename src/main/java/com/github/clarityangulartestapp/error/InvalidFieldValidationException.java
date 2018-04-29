@@ -1,13 +1,13 @@
 package com.github.clarityangulartestapp.error;
 
-public class NetworkInfoValidationException extends Exception {
+public class InvalidFieldValidationException extends Exception {
 
     private static final long serialVersionUID = 8370163225294378278L;
 
     private String validationMsg;
     private ValidationErrorField validationErrorField;
 
-    public NetworkInfoValidationException(String validationMsg, ValidationErrorField validationErrorField) {
+    public InvalidFieldValidationException(String validationMsg, ValidationErrorField validationErrorField) {
         super(new Exception(validationMsg));
         this.setValidationMsg(validationMsg);
         this.setValidationErrorField(validationErrorField);
