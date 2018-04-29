@@ -50,7 +50,7 @@ public class ErrorInfo implements Serializable {
         }
     }
 
-    public ErrorInfo(NetworkInfoValidationException exception) {
+    public ErrorInfo(InvalidFieldValidationException exception) {
         this.errorMessage = exception.getMessage();
         setErrorUCode(randomErrorCodeGenerator());
         setErrorClass(exception);
