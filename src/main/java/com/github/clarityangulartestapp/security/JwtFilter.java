@@ -74,12 +74,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void renewJwtToken(HttpServletResponse response, String name) {
         String cookieValue = null;
-        if (name != null) {
-            try {
-                cookieValue = jwtTokenManager.generateToken(name);
-            } catch (UnsupportedEncodingException e) {
-                logger.error("[renewJwtToken] error while creating JWT token: ", e);
-            }
+        try {
+            cookieValue = jwtTokenManager.generateToken(name);
+        } catch (UnsupportedEncodingException e) {
+            logger.error("[renewJwtToken] error while creating JWT token: ", e);
         }
         cookieManager.addCookieToResponse(response, cookieValue);
     }
@@ -92,7 +90,6 @@ public class JwtFilter extends OncePerRequestFilter {
             return user.getUsername();
         } catch (final Exception e) {
             logger.error("[validateJwtToken] {}", e.getMessage());
-            unauthorizedAccessResponse(response, e.getMessage());
         }
         return null;
     }

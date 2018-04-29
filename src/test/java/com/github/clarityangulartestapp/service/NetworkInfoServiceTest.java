@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.clarityangulartestapp.error.InvalidFieldValidationException;
@@ -27,13 +28,20 @@ import com.github.clarityangulartestapp.repository.NetworkInfoRepository;
 @SpringBootTest
 public class NetworkInfoServiceTest {
 
+    private static final String IP_1 = "192.168.1.1";
+    private static final String IP_2 = "192.168.1.2";
+    private static final String HOSTNAME_GOOGLE = "https://google.com";
+    private static final String HOSTNAME_YAHOO = "https://yahoo.com";
+
     private NetworkInfo netInfoGoogle;
     private NetworkInfo netInfoYahoo;
-
     private List<NetworkInfo> networkInfoList;
 
     @MockBean
     NetworkInfoRepository networkInfoRepository;
+
+    @MockBean
+    ApplicationContext applicationContext;
 
     @Autowired
     NetworkInfoService networkInfoService;
@@ -41,8 +49,8 @@ public class NetworkInfoServiceTest {
     @SuppressWarnings("unchecked")
     @Before
     public void setup() {
-        netInfoGoogle = newNetworkInfo(1L, "192.168.1.1", "https://google.com");
-        netInfoYahoo = newNetworkInfo(2L, "192.168.1.2", "https://yahoo.com");
+        netInfoGoogle = newNetworkInfo(1L, IP_1, HOSTNAME_GOOGLE);
+        netInfoYahoo = newNetworkInfo(2L, IP_2, HOSTNAME_YAHOO);
 
         networkInfoList = new ArrayList<NetworkInfo>();
         networkInfoList.add(netInfoGoogle);
@@ -51,8 +59,8 @@ public class NetworkInfoServiceTest {
         when(networkInfoRepository.findOne(null)).thenThrow(IllegalArgumentException.class);
         when(networkInfoRepository.findAll()).thenReturn(networkInfoList);
         when(networkInfoRepository.findOne(1L)).thenReturn(netInfoGoogle);
-        when(networkInfoRepository.findNetworkInfoByIp("192.168.1.1")).thenReturn(Arrays.asList(netInfoGoogle));
-        when(networkInfoRepository.findNetworkInfoByHostname("https://google.com")).thenReturn(Arrays.asList(netInfoGoogle));
+        when(networkInfoRepository.findNetworkInfoByIp(IP_1)).thenReturn(Arrays.asList(netInfoGoogle));
+        when(networkInfoRepository.findNetworkInfoByHostname(HOSTNAME_GOOGLE)).thenReturn(Arrays.asList(netInfoGoogle));
         when(networkInfoRepository.save(netInfoGoogle)).thenReturn(netInfoGoogle);
     }
 
@@ -64,7 +72,7 @@ public class NetworkInfoServiceTest {
         assertTrue(returnedNetworkInfoList.contains(netInfoYahoo));
     }
 
-	@Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void givenIdNull_whenFindNetworkInfoById_thenThrowException() {
         this.networkInfoService.findNetworkInfoById(null);
     }
@@ -77,14 +85,14 @@ public class NetworkInfoServiceTest {
 
     @Test
     public void givenExistingIp_whenFindNetworkInfoByIp_thenNetworkInfoListReturned() {
-        List<NetworkInfo> networkInfoList = this.networkInfoService.findNetworkInfoByIp("192.168.1.1");
+        List<NetworkInfo> networkInfoList = this.networkInfoService.findNetworkInfoByIp(IP_1);
         assertTrue(networkInfoList.contains(netInfoGoogle));
         assertEquals(1, networkInfoList.size());
     }
 
     @Test
     public void givenValidHostname_whenFindNetworkInfoByHostname_thenNetworkInfoListFound() {
-        List<NetworkInfo> networkInfoList = this.networkInfoService.findNetworkInfoByHostname("https://google.com");
+        List<NetworkInfo> networkInfoList = this.networkInfoService.findNetworkInfoByHostname(HOSTNAME_GOOGLE);
         assertTrue(networkInfoList.contains(netInfoGoogle));
         assertEquals(1, networkInfoList.size());
     }
