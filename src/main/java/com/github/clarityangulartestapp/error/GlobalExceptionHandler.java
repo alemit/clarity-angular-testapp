@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -33,12 +32,21 @@ public class GlobalExceptionHandler {
         return errorInfo;
     }
 
-    @ExceptionHandler(NetworkInfoValidationException.class)
+    @ExceptionHandler(InvalidFieldValidationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorInfo handleNetworkInfoValidationException(NetworkInfoValidationException exception) {
+    public ErrorInfo handleNetworkInfoValidationException(InvalidFieldValidationException exception) {
         ErrorInfo errorInfo = new ErrorInfo(exception);
         logger.trace("[handleNetworkInfoValidationException]: " + errorInfo.validationErrorInfo());
+        return errorInfo;
+    }
+
+    @ExceptionHandler(UnathorizedAccessException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ErrorInfo handleUnautorizedException(UnathorizedAccessException exception) {
+        ErrorInfo errorInfo = new ErrorInfo(exception);
+        logger.trace("[handleUnautorizedException]: " + errorInfo.validationErrorInfo());
         return errorInfo;
     }
 }

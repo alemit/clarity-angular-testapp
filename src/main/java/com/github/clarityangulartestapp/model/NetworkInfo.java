@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "network_info")
+@Table(name = "network_info", schema="netinfo")
 public class NetworkInfo {
     @Id
     @SequenceGenerator(name = "network_info_generator", sequenceName = "network_info_seq", allocationSize = 1)
