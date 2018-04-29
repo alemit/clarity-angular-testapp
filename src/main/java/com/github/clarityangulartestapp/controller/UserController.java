@@ -46,17 +46,8 @@ public class UserController implements PublicController {
         HttpHeaders headers = cookieManager.createCookieHeaders(jwtManager.generateToken(user.getUsername()), false);
         return new ResponseEntity<User>(authenticateUser, headers, HttpStatus.OK);
     }
-    
-    @RequestMapping(path = "/users/authentication", method = RequestMethod.GET)
-    public ResponseEntity<?> authenticateUser2()
-            throws UnsupportedEncodingException, InvalidFieldValidationException {
-        User authenticateUser = new User();
-        authenticateUser.setUsername("shit");
-        HttpHeaders headers = cookieManager.createCookieHeaders(jwtManager.generateToken(authenticateUser.getUsername()), false);
-        return new ResponseEntity<User>(authenticateUser, headers, HttpStatus.OK);
-    }
 
-    @RequestMapping(path = "/users/logout", method = RequestMethod.GET)
+    @RequestMapping(path = "/users/logout", method = RequestMethod.POST)
     public <T> ResponseEntity<?> logout() {
         return new ResponseEntity<T>(cookieManager.createCookieHeaders("", true), HttpStatus.NO_CONTENT);
     }

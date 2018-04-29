@@ -23,7 +23,7 @@ public class UserService {
     public User createUser(User user) throws InvalidFieldValidationException {
         User userFound = userRepository.findUserByUsername(user.getUsername());
         if (userFound != null) {
-            throw new InvalidFieldValidationException("Invalid name", new ValidationErrorField("user", "name", "Invalid name"));
+            throw new InvalidFieldValidationException("Invalid username", new ValidationErrorField("user", "username", "Invalid username"));
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
@@ -35,12 +35,12 @@ public class UserService {
         User userFound = userRepository.findUserByUsername(user.getUsername());
         if (userFound == null) {
             throw new InvalidFieldValidationException("Invalid username or password",
-                    new ValidationErrorField("user", "name or password", "Invalid name or password"));
+                    new ValidationErrorField("user", "username or password", "Invalid username or password"));
         }
 
         if (!passwordEncoder.matches(user.getPassword(), userFound.getPassword())) {
             throw new InvalidFieldValidationException("Invalid username or password",
-                    new ValidationErrorField("user", "name or password", "Invalid name or password"));
+                    new ValidationErrorField("user", "username or password", "Invalid username or password"));
         }
 
         userFound.setPassword(MASK);

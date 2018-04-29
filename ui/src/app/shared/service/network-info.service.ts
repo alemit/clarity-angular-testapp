@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { environment } from "../../../environments/environment";
 import { NetworkInfo } from '../model/network-info';
@@ -14,21 +14,21 @@ export class NetworkInfoService {
 
   public getAllNetworkInfo(): Observable<NetworkInfo[]> {
     const url = this.server_url + '/network-info';
-    return this.http.get<NetworkInfo[]>(url);
+    return this.http.get<NetworkInfo[]>(url, {withCredentials: true});
   }
 
   public createNewNetworkInfo(networkInfo: NetworkInfo): Observable<NetworkInfo> {
     const url = this.server_url + '/network-info';
-    return this.http.post<NetworkInfo>(url, networkInfo);
+    return this.http.post<NetworkInfo>(url, networkInfo, {withCredentials: true});
   }
 
   public editNetworkInfo(networkInfo: NetworkInfo): Observable<Response> {
     const url = this.server_url + '/network-info/' + String(networkInfo.id);
-    return this.http.put<Response>(url, networkInfo);
+    return this.http.put<Response>(url, networkInfo, {withCredentials: true});
   }
 
   public deleteNetworkInfoById(id: number): Observable<Response> {
     const url = this.server_url + '/network-info/' + String(id);
-    return this.http.delete<Response>(url);
+    return this.http.delete<Response>(url, {withCredentials: true});
   }
 }

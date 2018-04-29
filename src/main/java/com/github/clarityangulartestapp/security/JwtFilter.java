@@ -32,7 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private static Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
-    private static final String REQUEST_BEAN = "requestUser";
+    public static final String REQUEST_BEAN = "requestUser";
     private static final String PUBLIC_URL = "/public/**";
 
     private List<String> excludeUrlPatterns;

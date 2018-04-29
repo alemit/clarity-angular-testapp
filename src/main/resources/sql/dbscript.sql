@@ -15,7 +15,8 @@ CREATE SEQUENCE netinfo.user_seq
 CREATE TABLE netinfo.network_info (
     id bigint NOT NULL,
     ip character varying(15) NOT NULL,
-    hostname character varying(255) NOT NULL
+    hostname character varying(255) NOT NULL,
+    create_user character varying(32) NOT NULL,
 );
 
 

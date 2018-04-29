@@ -35,11 +35,7 @@ public class JwtTokenManager {
             Algorithm algorithm = Algorithm.HMAC512(jwtSecret);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = verifier.verify(token);
-            if (decodedJWT.getExpiresAt().compareTo(new Date()) > 0) {
-                return decodedJWT.getClaims();
-            } else {
-                throw new UnathorizedAccessException("Token expired");
-            }
+            return decodedJWT.getClaims();
         } else {
             throw new UnathorizedAccessException("Missing token");
         }
