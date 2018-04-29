@@ -1,6 +1,9 @@
 # clarity-angular-testapp
 This is an exercise application integrating the Clarity UI project together with Angular 5, calling a simple Spring Boot REST app and using PostgreSQL DB
 
+The database script is located under:
+`/src/main/resources/sql/`
+
 You can start the backend individually with maven:
 Using:
 `mvn clean install`
