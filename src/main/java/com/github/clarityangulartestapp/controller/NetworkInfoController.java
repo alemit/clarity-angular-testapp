@@ -19,8 +19,13 @@ import com.github.clarityangulartestapp.service.NetworkInfoService;
 
 @RestController
 public class NetworkInfoController {
+    private NetworkInfoService networkInfoService;
+
     @Autowired
-    NetworkInfoService networkInfoService;
+    public NetworkInfoController(NetworkInfoService networkInfoService) {
+        super();
+        this.networkInfoService = networkInfoService;
+    }
 
     @RequestMapping(path = "/network-info", method = RequestMethod.GET)
     public List<NetworkInfo> findAllNetworkInfo() {

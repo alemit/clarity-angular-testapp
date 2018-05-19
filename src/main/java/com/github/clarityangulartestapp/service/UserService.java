@@ -14,11 +14,15 @@ public class UserService {
 
     private static final String MASK = "*****";
 
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        super();
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User createUser(User user) throws InvalidFieldValidationException {
         User userFound = userRepository.findUserByUsername(user.getUsername());

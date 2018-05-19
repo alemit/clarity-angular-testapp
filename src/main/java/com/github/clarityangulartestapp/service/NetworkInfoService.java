@@ -20,11 +20,15 @@ public class NetworkInfoService {
 
     private static final Logger logger = LoggerFactory.getLogger(NetworkInfoService.class);
 
-    @Autowired
-    ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
+    private NetworkInfoRepository networkInfoRepository;
 
     @Autowired
-    NetworkInfoRepository networkInfoRepository;
+    public NetworkInfoService(ApplicationContext applicationContext, NetworkInfoRepository networkInfoRepository) {
+        super();
+        this.applicationContext = applicationContext;
+        this.networkInfoRepository = networkInfoRepository;
+    }
 
     public List<NetworkInfo> findAllNetworkInfo() {
         logger.debug("[findAllNetworkInfo] called");

@@ -22,14 +22,17 @@ import com.github.clarityangulartestapp.service.UserService;
 @RestController
 public class UserController implements PublicController {
 
-    @Autowired
     UserService userService;
-
-    @Autowired
     JwtTokenManager jwtManager;
+    CookieManager cookieManager;
 
     @Autowired
-    CookieManager cookieManager;
+    public UserController(UserService userService, JwtTokenManager jwtManager, CookieManager cookieManager) {
+        super();
+        this.userService = userService;
+        this.jwtManager = jwtManager;
+        this.cookieManager = cookieManager;
+    }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody User user)
